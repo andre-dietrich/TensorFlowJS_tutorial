@@ -109,6 +109,19 @@ setTimeout(function(e){ eee(`@input`+"\n") }, 100);
 
 # TensorFlow.js
 
+This is a translation of the official TensorFlowJS tutorials from
+https://js.tensorflow.org/tutorials/ into LiaScript (not ready yet).
+
+You can try out this interactive Tutorial at:
+
+https://liascript.github.io/course/?https://raw.githubusercontent.com/andre-dietrich/TensorFlowJS_tutorial/master/README.md
+
+or clone it from:
+
+https://github.com/andre-dietrich/TensorFlowJS_tutorial
+
+and start to create your own tutorial...
+
 ## Core Concepts
 
 __TensorFlow.js__ is an open source WebGL-accelerated JavaScript library for
