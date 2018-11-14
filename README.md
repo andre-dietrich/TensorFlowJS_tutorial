@@ -578,7 +578,7 @@ async function plotData(xs, ys) {
 @eval2
 
 
-<div id="main" style="position: relative; width:100%; height:400px;" hidden="true"></div>
+<div id="main" class="persistent" style="position: relative; width:100%; height:400px;" hidden="true"></div>
 
 
 
@@ -694,7 +694,7 @@ async function plotData(xs, ys, ts) {
 ```
 @eval2
 
-<div id="main2" cstyle="position: relative; width:100%; height:400px;" hidden="true"></div>
+<div id="main2" class="persistent" cstyle="position: relative; width:100%; height:400px;" hidden="true"></div>
 
 Let's go ahead and plot our polynomial function using the random values for $a$,
 $b$, $c$, and $d$ that we set in Step 1. Our plot will likely look something
