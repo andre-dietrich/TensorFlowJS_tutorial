@@ -12,98 +12,10 @@ narrator: US English Female
 comment:  Try to write a short comment about
           your course, multiline is also okay.
 
-script:   https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.3/dist/tf.min.js
-
 script:  https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts-en.min.js
 
 
-@eval
-<script>
-function reportError(error) {
-   let line = getLineNumber(error);
-   let details = [];
-   let msg = "An error occured";
-
-  if (line) {
-    details = [[{ row : line-1,
-               column : 0,
-                 text : error.message,
-                 type : "error" }]];
-
-    msg += " on line " + line;
-  }
-  send.lia("eval", msg + "\n" + error.message, details, false);
-};
-
-async function eee(code) {
-  let oldLog = console.log;
-
-  console.log = function(e){ send.lia("output", e + "\n") };
-
-  try {
-    const evalString = '(async function runner() { try { ' + code + '} catch (e) { reportError(e) } })()';
-
-    await eval(evalString).catch(function(e) {
-      reportError(e);
-      console.log = oldLog;
-    });
-    send.lia("eval", "LIA: stop");
-  }
-  catch(e) {
-    console.log = oldLog;
-    reportError(e);
-  }
-};
-setTimeout(function(e){ eee(`@input`+"\n") }, 100);
-"LIA: wait";
-</script>
-@end
-
-
-@eval2
-<script>
-function reportError(error) {
-   let line = getLineNumber(error);
-   let details = [];
-   let msg = "An error occured";
-
-  if (line) {
-    details = [[{ row : line-1,
-               column : 0,
-                 text : error.message,
-                 type : "error" }]];
-
-    msg += " on line " + line;
-  }
-  send.lia("eval", msg + "\n" + error.message, details, false);
-};
-
-async function eee() {
-  let file1 = `@input(0)` + "\n";
-  let file2 = `@input(1)` + "\n";
-  let oldLog = console.log;
-
-  console.log = function(e){ send.lia("output", e + "\n") };
-
-  try {
-    const evalString = '(async function runner() { try { ' + file1 + file2 + '} catch (e) { reportError(e) } })()';
-
-    await eval(evalString).catch(function(e) {
-      reportError(e);
-      console.log = oldLog;
-    });
-    send.lia("eval", "LIA: stop");
-  }
-  catch(e) {
-    console.log = oldLog;
-    reportError(e);
-  }
-};
-setTimeout(function(e){ eee(`@input`+"\n") }, 100);
-"LIA: wait";
-</script>
-@end
-
+import: https://raw.githubusercontent.com/liaScript/tensorflowjs_template/master/README.md
 
 -->
 
@@ -158,17 +70,16 @@ a.print(); // print Tensor values
 const b = tf.tensor([[1.0, 2.0, 3.0], [10.0, 20.0, 30.0]]);
 b.print(); // print Tensor values
 ```
-@eval
-
-
-<!-- hidden="true" -->
+``` @output
+Tensor
+    [[1 , 2 , 3 ],
+     [10, 20, 30]]
+Tensor
+    [[1 , 2 , 3 ],
+     [10, 20, 30]]
 ```
-Output: [[1 , 2 , 3 ],
-         [10, 20, 30]]
+@TF.eval
 
-Output: [[1 , 2 , 3 ],
-         [10, 20, 30]]
-```
 
 However, for constructing low-rank tensors, we recommend using the following
 functions to enhance code readability:
@@ -185,17 +96,12 @@ The following example creates an identical tensor to the one above using
 const c = tf.tensor2d([[1.0, 2.0, 3.0], [10.0, 20.0, 30.0]]);
 c.print();
 ```
-@eval
-
-
-<!-- hidden="true" -->
+``` @output
+Tensor
+    [[1 , 2 , 3 ],
+     [10, 20, 30]]
 ```
-Output: [[1 , 2 , 3 ],
-         [10, 20, 30]]
-
-Output: [[1 , 2 , 3 ],
-         [10, 20, 30]]
-```
+@TF.eval
 
 TensorFlow.js also provides convenience functions for creating tensors with all
 values set to 0
@@ -207,12 +113,14 @@ values set to 1
 // 3x5 Tensor with all values set to 0
 const zeros = tf.zeros([3, 5]);
 zeros.print();
-// Output: [[0, 0, 0, 0, 0],
-//          [0, 0, 0, 0, 0],
-//          [0, 0, 0, 0, 0]]
-
 ```
-@eval
+``` @output
+Tensor
+    [[0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0]]
+```
+@TF.eval
 
 In TensorFlow.js, tensors are immutable; once created, you cannot change their
 values. Instead you perform operations on them that generate new tensors.
@@ -234,7 +142,7 @@ const updatedValues = tf.tensor1d([0, 1, 0, 1, 0]);
 biases.assign(updatedValues); // update values of biases
 biases.print();               // output: [0, 1, 0, 1, 0]
 ```
-@eval
+@TF.eval
 
 Variables are primarily used to store and then update values during model
 training.
@@ -258,7 +166,7 @@ d_squared.print();
 // Output: [[1, 4 ],
 //          [9, 16]]
 ```
-@eval
+@TF.eval
 
 And binary ops such as
 [`add`](https://js.tensorflow.org/api/latest/index.html#add),
@@ -274,7 +182,7 @@ e_plus_f.print();
 // Output: [[6 , 8 ],
 //          [10, 12]]
 ```
-@eval
+@TF.eval
 
 TensorFlow.js has a chainable API; you can call ops on the result of ops:
 
@@ -287,7 +195,7 @@ sq_sum.print();
 // Output: [[36 , 64 ],
 //          [100, 144]]
 ```
-@eval
+@TF.eval
 
 All operations are also exposed as functions in the main namespace, so you could
 also do the following:
@@ -299,7 +207,7 @@ const f = tf.tensor2d([[5.0, 6.0], [7.0, 8.0]]);
 const sq_sum = tf.square(tf.add(e, f));
 sq_sum.print();
 ```
-@eval
+@TF.eval
 
 ### Models and Layers
 
@@ -334,7 +242,7 @@ const c = tf.scalar(8);
 const result = predict(2);
 result.print() // Output: 24
 ```
-@eval
+@TF.eval
 
 You can also use the high-level API
 [`tf.model`](https://js.tensorflow.org/api/latest/index.html#model) to construct
@@ -388,7 +296,7 @@ x_squared.dispose();
 x.print()         // will create an Error (Tensor is disposed)
 x_squared.print() // ...
 ```
-@eval
+@TF.eval
 
 #### `tf.tidy`
 
@@ -417,7 +325,7 @@ const average = tf.tidy(() => {
 
 average.print() // Output: 3.5
 ```
-@eval
+@TF.eval
 
 Using `tf.tidy` will help prevent memory leaks in your application. It can also
 be used to more carefully control when memory is reclaimed.
@@ -504,7 +412,7 @@ window.generateData = function (numPoints, coeff, sigma = 0.04) {
 }
 console.log("global function 'generateData' generated!")
 ```
-@eval
+@TF.eval
 
 
 This data was generated using a cubic function of the format
@@ -575,7 +483,7 @@ async function plotData(xs, ys) {
   window.addEventListener('resize', chart.resize);
 }
 ```
-@eval2
+@TF.eval2
 
 
 <div id="main" class="persistent" style="position: relative; width:100%; height:400px;" hidden="true"></div>
@@ -599,7 +507,7 @@ a.print(); b.print(); c.print(); d.print();
 
 window.startVariables = [a, b, c, d];
 ```
-@eval
+@TF.eval
 
 ### Step 2: Build a Model
 
@@ -689,12 +597,12 @@ async function plotData(xs, ys, ts) {
   };
 
   chart.setOption(option);
-  window.addEventListener('resize', chart.resize);
+//  window.addEventListener('resize', chart.resize);
 }
 ```
-@eval2
+@TF.eval2
 
-<div id="main2" class="persistent" cstyle="position: relative; width:100%; height:400px;" hidden="true"></div>
+<div id="main2" class="persistent" style="position: relative; width:100%; height:400px;" hidden="true"></div>
 
 Let's go ahead and plot our polynomial function using the random values for $a$,
 $b$, $c$, and $d$ that we set in Step 1. Our plot will likely look something
@@ -904,7 +812,7 @@ const predictionsAfter = predict(trainingData.xs);
 predictionsBefore.dispose();
 predictionsAfter.dispose();
 ```
-@eval
+@TF.eval
 
 
 The result is much better than the curve we originally plotted using random
