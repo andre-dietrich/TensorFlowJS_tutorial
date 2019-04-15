@@ -1,16 +1,15 @@
 <!--
-author:   Your Name
+author:   André Dietrich
 
-email:    your@mail.org
+email:    andre.dietrich@ovgu.de
 
-version:  0.0.1
+version:  0.0.2
 
 language: en
 
 narrator: US English Female
 
-comment:  Try to write a short comment about
-          your course, multiline is also okay.
+comment:  Official TensorFlow tutorial ported to LiaScript.
 
 script:  https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts-en.min.js
 
@@ -517,6 +516,8 @@ multiplication (`mul`), and exponentiation (`pow` and `square`).
 
 The following code constructs a predict function that takes `x` as input and
 returns `y`:
+
+
 
 ``` javascript predict.js
 function predict(x) {
