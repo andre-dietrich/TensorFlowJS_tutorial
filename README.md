@@ -3,18 +3,20 @@ author:   André Dietrich
 
 email:    andre.dietrich@ovgu.de
 
-version:  0.0.2
+version:  0.0.3
 
 language: en
 
 narrator: US English Female
 
+logo:     https://upload.wikimedia.org/wikipedia/commons/d/d3/TorontoMusicGarden10-TensorFlow.jpg
+
 comment:  Official TensorFlow tutorial ported to LiaScript.
 
-script:  https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts-en.min.js
+script:   https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts-en.min.js
 
 
-import: https://raw.githubusercontent.com/liaScript/tensorflowjs_template/master/README.md
+import:  https://raw.githubusercontent.com/liaScript/tensorflowjs_template/master/README.md
 
 -->
 
